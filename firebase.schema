@@ -1,0 +1,41 @@
+
+/users
+  userId
+    avatar
+    name
+    userId
+
+/ducks
+  duckId
+    avatar
+    duckId
+    name
+    text
+    timestamp
+    userId
+
+/usersDucks
+  userId
+    duckId
+      avatar
+      duckId
+      name
+      text
+      timestamp
+      userId
+
+/replies
+  duckId
+    replyId
+      comment
+      duckId
+      name
+      replyId
+      timestamp
+
+/likeCount  // at top level because will more often change
+  duckId
+
+/usersLikes
+  userId
+    duckId
