@@ -1,14 +1,19 @@
 import React from 'react';
-import { Route, HashRouter } from 'react-router-dom';
-import { AuthenticateContainer, HomeContainer, MainContainer } from '../containers';
+import { withRouter, HashRouter, Route, Switch } from 'react-router-dom';
+import { AuthenticateContainer, FeedContainer, HomeContainer, MainContainer } from '../containers';
+
+const MainContainerWithRouter = withRouter(MainContainer);
 
 const routes = (
   <HashRouter>
     <Route path="/">
-      <MainContainer>
-        <Route path="/auth" component={AuthenticateContainer} />
-        <Route exact path="/" component={HomeContainer} />
-      </MainContainer>
+      <MainContainerWithRouter>
+        <Switch>
+          <Route path="/auth" component={AuthenticateContainer} />
+          <Route path="/feed" component={FeedContainer} />
+          <Route exact path="/" component={HomeContainer} />
+        </Switch>
+      </MainContainerWithRouter>
     </Route>
   </HashRouter>
 );

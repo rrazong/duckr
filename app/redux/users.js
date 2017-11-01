@@ -125,7 +125,7 @@ export function fetchAndHandleAuthedUser() {
   return (dispatch) => {
     dispatch(fetchingUser());
 
-    auth()
+    return auth()
       .then((authedUser) => {
         dispatch(fetchingUserSuccess(
           authedUser.uid,

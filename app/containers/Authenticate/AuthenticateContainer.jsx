@@ -13,7 +13,10 @@ class AuthenticateContainer extends React.Component {
   }
 
   handleAuth() {
-    this.props.fetchAndHandleAuthedUser();
+    this.props.fetchAndHandleAuthedUser()
+      .then(() => {
+        this.context.router.history.push('/feed');
+      });
   }
 
   render() {
@@ -30,6 +33,10 @@ class AuthenticateContainer extends React.Component {
     );
   }
 }
+
+AuthenticateContainer.contextTypes = {
+  router: PropTypes.object.isRequired,
+};
 
 AuthenticateContainer.propTypes = {
   error: PropTypes.string.isRequired,
