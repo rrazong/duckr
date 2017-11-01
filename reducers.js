@@ -47,7 +47,6 @@ function users (state = initialState, action) {
           error: '',
           [action.uid]: user(state[action.uid], action),
           }
-        }
     break;
     default:
       return state

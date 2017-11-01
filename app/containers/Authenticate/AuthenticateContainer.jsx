@@ -9,6 +9,7 @@ class AuthenticateContainer extends React.Component {
     this.state = {
       error: '',
       isFetching: false,
+      user: {},
     };
 
     this.handleAuth = this.handleAuth.bind(this);
@@ -24,6 +25,7 @@ class AuthenticateContainer extends React.Component {
         this.setState({
           error: '',
           isFetching: false,
+          user,
         });
       })
       .catch((error) => {
@@ -35,7 +37,7 @@ class AuthenticateContainer extends React.Component {
   }
 
   render() {
-    const { error, isFetching } = this.state;
+    const { error, isFetching, user } = this.state;
 
     return (
       <div>
@@ -44,6 +46,14 @@ class AuthenticateContainer extends React.Component {
           isFetching={isFetching}
           onAuth={this.handleAuth}
         />
+        {
+          user.uid &&
+            <div>
+              <p>{user.uid}</p>
+              <p>{user.name}</p>
+              <p>{user.avatar}</p>
+            </div>
+        }
       </div>
     );
   }
