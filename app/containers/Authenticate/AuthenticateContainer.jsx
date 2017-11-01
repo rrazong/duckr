@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../../redux/users';
 import { Authenticate } from '../../components';
 import auth from '../../helpers/auth';
 
@@ -6,38 +10,28 @@ class AuthenticateContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      error: '',
-      isFetching: false,
-      user: {},
-    };
-
     this.handleAuth = this.handleAuth.bind(this);
   }
 
   handleAuth() {
-    this.setState({
-      isFetching: true,
-    });
+    this.props.fetchingUser();
 
     auth()
       .then((user) => {
-        this.setState({
-          error: '',
-          isFetching: false,
+        this.props.fetchingUserSuccess(
+          user.uid,
           user,
-        });
+          Date.now(),
+        );
+        this.props.authUser(user.uid);
       })
       .catch((error) => {
-        this.setState({
-          error: error.message,
-          isFetching: false,
-        });
+        this.props.fetchingUserFailure(error.message);
       });
   }
 
   render() {
-    const { error, isFetching, user } = this.state;
+    const { error, isFetching } = this.props;
 
     return (
       <div>
@@ -46,17 +40,30 @@ class AuthenticateContainer extends React.Component {
           isFetching={isFetching}
           onAuth={this.handleAuth}
         />
-        {
-          user.uid &&
-            <div>
-              <p>{user.uid}</p>
-              <p>{user.name}</p>
-              <p>{user.avatar}</p>
-            </div>
-        }
       </div>
     );
   }
 }
 
-export default AuthenticateContainer;
+AuthenticateContainer.propTypes = {
+  error: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  authUser: PropTypes.func.isRequired,
+  fetchingUser: PropTypes.func.isRequired,
+  fetchingUserFailure: PropTypes.func.isRequired,
+  fetchingUserSuccess: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  // console.log(state);
+  return {
+    error: state.error,
+    isFetching: state.isFetching,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateContainer);

@@ -18,7 +18,7 @@ export function authUser(uid) {
   };
 }
 
-export function unAuthUser() {
+export function unauthUser() {
   return {
     type: UNAUTH_USER,
   };
@@ -30,13 +30,15 @@ export function fetchingUser() {
   };
 }
 
-export function fetchingUserFailure() {
+export function fetchingUserFailure(error) {
   return {
     type: FETCHING_USER_FAILURE,
-    error: 'Error fetching user',
+    error,
   };
 }
 
+// Allow "user" to be a parameter name
+// eslint-disable-next-line no-shadow
 export function fetchingUserSuccess(uid, user, timestamp) {
   return {
     type: FETCHING_USER_SUCCESS,
@@ -44,6 +46,34 @@ export function fetchingUserSuccess(uid, user, timestamp) {
     user,
     timestamp,
   };
+}
+
+const initialUserState = {
+  lastUpdated: 0,
+  info: {
+    avatar: '',
+    name: '',
+    uid: '',
+  },
+};
+
+function user(state = initialUserState, action) {
+  switch (action.type) {
+    case FETCHING_USER_SUCCESS: {
+      const { avatar = '', name = '', uid = '' } = action.user;
+      return {
+        ...state,
+        lastUpdated: action.timestamp,
+        info: {
+          avatar,
+          name,
+          uid,
+        },
+      };
+    }
+    default:
+      return state;
+  }
 }
 
 function users(state = initialState, action) {
@@ -81,9 +111,10 @@ function users(state = initialState, action) {
         }
         : {
           ...state,
+          authedId: action.uid,
           isFetching: false,
           error: '',
-          authedId: action.user,
+          [action.uid]: user(state[action.uid], action),
         };
     default:
       return state;
