@@ -1,3 +1,5 @@
+import auth from '../helpers/auth';
+
 const AUTH_USER = 'AUTH_USER';
 const UNAUTH_USER = 'UNAUTH_USER';
 const FETCHING_USER = 'FETCHING_USER';
@@ -10,43 +12,6 @@ const initialState = {
   isFetching: false,
   error: '',
 };
-
-export function authUser(uid) {
-  return {
-    type: AUTH_USER,
-    uid,
-  };
-}
-
-export function unauthUser() {
-  return {
-    type: UNAUTH_USER,
-  };
-}
-
-export function fetchingUser() {
-  return {
-    type: FETCHING_USER,
-  };
-}
-
-export function fetchingUserFailure(error) {
-  return {
-    type: FETCHING_USER_FAILURE,
-    error,
-  };
-}
-
-// Allow "user" to be a parameter name
-// eslint-disable-next-line no-shadow
-export function fetchingUserSuccess(uid, user, timestamp) {
-  return {
-    type: FETCHING_USER_SUCCESS,
-    uid,
-    user,
-    timestamp,
-  };
-}
 
 const initialUserState = {
   lastUpdated: 0,
@@ -119,6 +84,60 @@ function users(state = initialState, action) {
     default:
       return state;
   }
+}
+
+function authUser(uid) {
+  return {
+    type: AUTH_USER,
+    uid,
+  };
+}
+
+function unauthUser() {
+  return {
+    type: UNAUTH_USER,
+  };
+}
+
+function fetchingUser() {
+  return {
+    type: FETCHING_USER,
+  };
+}
+
+function fetchingUserFailure(error) {
+  return {
+    type: FETCHING_USER_FAILURE,
+    error,
+  };
+}
+
+function fetchingUserSuccess(uid, authedUser, timestamp) {
+  return {
+    type: FETCHING_USER_SUCCESS,
+    uid,
+    user: authedUser,
+    timestamp,
+  };
+}
+
+export function fetchAndHandleAuthedUser() {
+  return (dispatch) => {
+    dispatch(fetchingUser());
+
+    auth()
+      .then((authedUser) => {
+        dispatch(fetchingUserSuccess(
+          authedUser.uid,
+          authedUser,
+          Date.now(),
+        ));
+        dispatch(authUser(user.uid));
+      })
+      .catch((error) => {
+        dispatch(fetchingUserFailure(error.message));
+      });
+  };
 }
 
 export default users;
