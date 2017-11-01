@@ -14,12 +14,8 @@
   justify-content: center;
 }
 
-.subHeader {
-  color: #4a90e2;
-  font-size: 35px;
-  text-align: center;
-  line-height: 55px;
-  font-weight: 100;
+.errorMsg {
+  color: red;
 }
 
 .largeHeader {
@@ -27,4 +23,12 @@
   font-weight: 100;
   font-size: 100px;
   margin-bottom: 20px;
+}
+
+.subHeader {
+  color: #4a90e2;
+  font-size: 35px;
+  text-align: center;
+  line-height: 55px;
+  font-weight: 100;
 }

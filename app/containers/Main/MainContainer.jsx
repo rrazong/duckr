@@ -5,7 +5,7 @@ import { Navigation } from '../../components';
 
 const MainContainer = props => (
   <div className={container}>
-    <Navigation isAuthed />
+    <Navigation isAuthed={false} />
     <div className={innerContainer}>
       {props.children}
     </div>

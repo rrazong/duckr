@@ -1,4 +1,9 @@
-import MainContainer from './Main/MainContainer';
+import AuthenticateContainer from './Authenticate/AuthenticateContainer';
 import HomeContainer from './Home/HomeContainer';
+import MainContainer from './Main/MainContainer';
 
-export { MainContainer, HomeContainer };
+export {
+  AuthenticateContainer,
+  HomeContainer,
+  MainContainer,
+};
