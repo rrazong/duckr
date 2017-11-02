@@ -18,13 +18,9 @@ const store = createStore(
 );
 /* eslint-enable */
 
-function checkAuth(component) {
-  return restricted(component, store);
-}
-
 ReactDom.render(
   <Provider store={store} >
-    {getRoutes(checkAuth)}
+    {getRoutes(Component => restricted(Component, store))}
   </Provider>,
   document.getElementById('app'),
 );

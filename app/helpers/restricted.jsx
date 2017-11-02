@@ -3,22 +3,17 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { checkIfAuthed } from './auth';
 
-export default function restricted(BaseComponent, store) {
+export default function restricted(Component, store) {
   function checkAuthentication(props) {
-    const { history } = props;
-    const nextPathName = history.location.pathname;
     const isAuthed = checkIfAuthed(store);
+    const { history, location: { pathname: destination } } = props;
 
-    // If going to home or auth page, but already authenticated,
-    // go to the feed page instead.
-    // If going to any page other than home or auth page, while not authenticated,
-    // go to the auth page instead.
-    if (nextPathName === '/' || nextPathName === '/auth') {
+    if (destination === '/' || destination === '/auth') {
       if (isAuthed) {
-        history.replace('feed');
+        history.push('/feed');
       }
     } else if (!isAuthed) {
-      history.replace('auth');
+      history.push('/auth');
     }
   }
 
@@ -32,15 +27,18 @@ export default function restricted(BaseComponent, store) {
         checkAuthentication(nextProps);
       }
     }
-
     render() {
-      return <BaseComponent {...this.args} />;
+      return <Component {...this.props} />;
     }
   }
 
   Restricted.propTypes = {
-    location: PropTypes.shape({}).isRequired,
-    history: PropTypes.shape({}).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   return withRouter(Restricted);
