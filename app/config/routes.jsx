@@ -5,12 +5,12 @@ import { AuthenticateContainer, FeedContainer, HomeContainer, MainContainer } fr
 function getRoutes(checkAuth) {
   return (
     <HashRouter>
-      <Route path="/" onEnter={checkAuth}>
+      <Route path="/">
         <MainContainer>
           <Switch>
-            <Route path="/auth" component={AuthenticateContainer} />
-            <Route path="/feed" component={FeedContainer} />
-            <Route exact path="/" component={HomeContainer} />
+            <Route path="/auth" component={checkAuth(AuthenticateContainer)} />
+            <Route path="/feed" component={checkAuth(FeedContainer)} />
+            <Route exact path="/" component={checkAuth(HomeContainer)} />
           </Switch>
         </MainContainer>
       </Route>

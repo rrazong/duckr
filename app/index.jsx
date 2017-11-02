@@ -3,14 +3,10 @@ import ReactDom from 'react-dom';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import users from './redux/users';
+import restricted from './helpers/restricted';
 import getRoutes from './config/routes';
+import users from './redux/users';
 import './styles/index.css';
-
-function checkAuth(foo, bar) {
-  debugger;
-  console.log('foo', foo, 'bar', bar);
-}
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
@@ -21,6 +17,10 @@ const store = createStore(
   ),
 );
 /* eslint-enable */
+
+function checkAuth(component) {
+  return restricted(component, store);
+}
 
 ReactDom.render(
   <Provider store={store} >

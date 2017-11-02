@@ -1,4 +1,4 @@
-import auth from '../helpers/auth';
+import { auth } from '../helpers/auth';
 
 const AUTH_USER = 'AUTH_USER';
 const UNAUTH_USER = 'UNAUTH_USER';
