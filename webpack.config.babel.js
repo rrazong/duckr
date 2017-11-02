@@ -25,7 +25,7 @@ const base = {
     ],
   },
   resolve: {
-    modules: [path.resolve('./app'), 'node_modules'],
+    modules: [PATHS.app, 'node_modules'],
     extensions: ['.js', '.jsx'],
   },
 };
@@ -35,8 +35,6 @@ const devConfig = {
   devServer: {
     contentBase: PATHS.build,
     hot: true,
-    inline: true,
-    progress: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -56,6 +54,10 @@ const productionConfig = {
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
       },
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      minimize: true,
     }),
   ],
 };

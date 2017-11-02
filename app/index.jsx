@@ -4,8 +4,13 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import users from './redux/users';
-import routes from './config/routes';
+import getRoutes from './config/routes';
 import './styles/index.css';
+
+function checkAuth(foo, bar) {
+  debugger;
+  console.log('foo', foo, 'bar', bar);
+}
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
@@ -19,7 +24,7 @@ const store = createStore(
 
 ReactDom.render(
   <Provider store={store} >
-    {routes}
+    {getRoutes(checkAuth)}
   </Provider>,
   document.getElementById('app'),
 );
