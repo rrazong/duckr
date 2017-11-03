@@ -16,7 +16,7 @@ class AuthenticateContainer extends React.Component {
     e.preventDefault();
 
     this.props.fetchAndHandleAuthedUser()
-      .then(() => {
+      .then((/* dispatch() */) => {
         this.context.router.history.replace('feed');
       });
   }
@@ -47,7 +47,6 @@ AuthenticateContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  // console.log(state);
   return {
     error: state.error,
     isFetching: state.isFetching,

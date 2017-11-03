@@ -1,4 +1,5 @@
-import { auth } from '../helpers/auth';
+import { auth, logout, saveUser } from '../helpers/auth';
+import formatUserInfo from '../helpers/util';
 
 const AUTH_USER = 'AUTH_USER';
 const UNAUTH_USER = 'UNAUTH_USER';
@@ -127,13 +128,21 @@ export function fetchAndHandleAuthedUser() {
 
     return auth()
       .then((authedUser) => {
-        dispatch(fetchingUserSuccess(
-          authedUser.uid,
-          authedUser,
+        const userData = authedUser.user.providerData[0];
+        const userInfo = formatUserInfo(
+          userData.displayName,
+          userData.photoURL,
+          authedUser.user.uid,
+        );
+
+        return dispatch(fetchingUserSuccess(
+          userInfo.uid,
+          userInfo,
           Date.now(),
         ));
-        dispatch(authUser(user.uid));
       })
+      .then(({ user }) => saveUser(user)) // eslint-disable-line no-shadow
+      .then(user => dispatch(authUser(user.uid))) // eslint-disable-line no-shadow
       .catch((error) => {
         dispatch(fetchingUserFailure(error.message));
       });
