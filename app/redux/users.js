@@ -6,11 +6,12 @@ const UNAUTH_USER = 'UNAUTH_USER';
 const FETCHING_USER = 'FETCHING_USER';
 const FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE';
 const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS';
+const REMOVE_IS_FETCHING = 'REMOVE_IS_FETCHING';
 
 const initialState = {
   isAuthed: false,
   authedId: '',
-  isFetching: false,
+  isFetching: true,
   error: '',
 };
 
@@ -82,12 +83,17 @@ function users(state = initialState, action) {
           error: '',
           [action.uid]: user(state[action.uid], action),
         };
+    case REMOVE_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: false,
+      };
     default:
       return state;
   }
 }
 
-function authUser(uid) {
+export function authUser(uid) {
   return {
     type: AUTH_USER,
     uid,
@@ -113,12 +119,19 @@ function fetchingUserFailure(error) {
   };
 }
 
-function fetchingUserSuccess(uid, authedUser, timestamp) {
+export function fetchingUserSuccess(uid, userInfo, timestamp) {
   return {
     type: FETCHING_USER_SUCCESS,
     uid,
-    user: authedUser,
+    user: userInfo,
     timestamp,
+  };
+}
+
+export function logoutAndUnauth() {
+  return (dispatch) => {
+    logout(); // Log out from Firebase
+    dispatch(unauthUser()); // Update app state
   };
 }
 
@@ -127,12 +140,12 @@ export function fetchAndHandleAuthedUser() {
     dispatch(fetchingUser());
 
     return auth()
-      .then((authedUser) => {
-        const userData = authedUser.user.providerData[0];
+      .then(({ user: authedUser, credential }) => {
+        const userData = authedUser.providerData[0];
         const userInfo = formatUserInfo(
           userData.displayName,
           userData.photoURL,
-          authedUser.user.uid,
+          authedUser.uid,
         );
 
         return dispatch(fetchingUserSuccess(
@@ -143,9 +156,13 @@ export function fetchAndHandleAuthedUser() {
       })
       .then(({ user }) => saveUser(user)) // eslint-disable-line no-shadow
       .then(user => dispatch(authUser(user.uid))) // eslint-disable-line no-shadow
-      .catch((error) => {
-        dispatch(fetchingUserFailure(error.message));
-      });
+      .catch(error => dispatch(fetchingUserFailure(error.message)));
+  };
+}
+
+export function removeIsFetching() {
+  return {
+    type: REMOVE_IS_FETCHING,
   };
 }
 

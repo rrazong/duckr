@@ -12,11 +12,11 @@ export function checkIfAuthed(store) {
 }
 
 export function logout() {
-  firebaseAuth().signOut();
+  return firebaseAuth().signOut();
 }
 
 export function saveUser(user) {
-  ref.child(`users/${user.uid}`)
-    .set(user);
-  return user;
+  return ref.child(`users/${user.uid}`)
+    .set(user)
+    .then(() => user);
 }
