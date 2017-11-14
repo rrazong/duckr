@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../redux/users';
+import * as actionCreators from '../../redux/modules/users';
 import { Authenticate } from '../../components';
 
 class AuthenticateContainer extends React.Component {

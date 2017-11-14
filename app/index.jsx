@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import restricted from './helpers/restricted';
 import getRoutes from './config/routes';
-import users from './redux/users';
+import users from './redux/modules/users';
 import './styles/index.css';
 
 /* eslint-disable no-underscore-dangle */

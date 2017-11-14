@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as actionCreators from '../../redux/users';
+import * as actionCreators from '../../redux/modules/users';
 import { Navigation } from '../../components';
 import { container, innerContainer } from './styles.css';
 import { firebaseAuth } from '../../config/constants';

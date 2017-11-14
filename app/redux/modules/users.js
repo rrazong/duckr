@@ -1,5 +1,5 @@
-import { auth, logout, saveUser } from '../helpers/auth';
-import formatUserInfo from '../helpers/util';
+import { auth, logout, saveUser } from '../../helpers/auth';
+import formatUserInfo from '../../helpers/util';
 
 const AUTH_USER = 'AUTH_USER';
 const UNAUTH_USER = 'UNAUTH_USER';
