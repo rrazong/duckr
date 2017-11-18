@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import restricted from './helpers/restricted';
 import getRoutes from './config/routes';
-import users from './redux/modules/users';
+import reducer from './redux/modules';
 import './styles/index.css';
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
-  users,
+  reducer,
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

@@ -8,7 +8,7 @@ export function auth() {
 // Check application state if user has been authenticated
 export function checkIfAuthed(store) {
   // TODO: If not authed in state, check Firebase/Facebook
-  return store.getState().isAuthed;
+  return store.getState().users.isAuthed;
 }
 
 export function logout() {

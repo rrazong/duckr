@@ -48,8 +48,8 @@ AuthenticateContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    error: state.error,
-    isFetching: state.isFetching,
+    error: state.users.error,
+    isFetching: state.users.isFetching,
   };
 }
 

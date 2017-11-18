@@ -140,7 +140,7 @@ export function fetchAndHandleAuthedUser() {
     dispatch(fetchingUser());
 
     return auth()
-      .then(({ user: authedUser, credential }) => {
+      .then(({ user: authedUser/* , credential */ }) => {
         const userData = authedUser.providerData[0];
         const userInfo = formatUserInfo(
           userData.displayName,

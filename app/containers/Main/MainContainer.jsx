@@ -69,8 +69,8 @@ MainContainer.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthed: state.isAuthed,
-  isFetching: state.isFetching,
+  isAuthed: state.users.isAuthed,
+  isFetching: state.users.isFetching,
 });
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
