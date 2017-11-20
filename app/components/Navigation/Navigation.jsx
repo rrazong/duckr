@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { container, navContainer, link } from './styles.css';
-import ModalContainer from '../../containers/Modal/ModalContainer';
+import { ModalContainer } from '../../containers';
 
 const Navigation = ({ isAuthed }) => (
   <div className={container} >
