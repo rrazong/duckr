@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
-import users from './users';
+import ducks from './ducks';
+import feed from './feed';
 import modal from './modal';
+import users from './users';
+import usersDucks from './usersDucks';
 
 export default combineReducers({
-  users,
+  ducks,
+  feed,
   modal,
+  users,
+  usersDucks,
 });

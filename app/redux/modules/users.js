@@ -24,7 +24,7 @@ const initialUserState = {
   },
 };
 
-function user(state = initialUserState, action) {
+function userReducer(state = initialUserState, action) {
   switch (action.type) {
     case FETCHING_USER_SUCCESS: {
       const { avatar = '', name = '', uid = '' } = action.user;
@@ -43,7 +43,7 @@ function user(state = initialUserState, action) {
   }
 }
 
-function users(state = initialState, action) {
+export default function usersReducer(state = initialState, action) {
   switch (action.type) {
     case AUTH_USER:
       return {
@@ -81,7 +81,7 @@ function users(state = initialState, action) {
           authedId: action.uid,
           isFetching: false,
           error: '',
-          [action.uid]: user(state[action.uid], action),
+          [action.uid]: userReducer(state[action.uid], action),
         };
     case REMOVE_IS_FETCHING:
       return {
@@ -165,5 +165,3 @@ export function removeIsFetching() {
     type: REMOVE_IS_FETCHING,
   };
 }
-
-export default users;

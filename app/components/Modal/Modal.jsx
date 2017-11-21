@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { default as ReactModal } from 'react-modal';
+import ReactModal from 'react-modal';
 import {
   newDuckInputContainer,
   darkBtn,
@@ -23,9 +23,10 @@ const modalStyles = {
 
 function Modal(props) {
   function submitDuck() {
-    const { user, duckText } = props;
+    const { closeModal, duckText, user } = props;
 
     console.log(user, duckText);
+    closeModal();
   }
 
   const {

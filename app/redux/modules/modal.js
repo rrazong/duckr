@@ -7,7 +7,7 @@ const initialState = {
   duckText: '',
 };
 
-function modal(state = initialState, action) {
+export default function modalReducer(state = initialState, action) {
   switch (action.type) {
     case OPENING_NEW_DUCK_MODAL:
       return {
@@ -47,5 +47,3 @@ export function updateDuckText(newDuckText) {
     newDuckText,
   };
 }
-
-export default modal;
