@@ -7,7 +7,7 @@ import * as actionCreators from '../../redux/modules/users';
 import { Navigation } from '../../components';
 import { container, innerContainer } from './styles.css';
 import { firebaseAuth } from '../../config/constants';
-import formatUserInfo from '../../helpers/util';
+import { formatUserInfo } from '../../helpers/util';
 
 class MainContainer extends React.Component {
   componentDidMount() {

@@ -9,6 +9,7 @@ import {
   pointer,
   submitDuckBtn,
 } from './styles.css';
+import { formatDuck } from '../../helpers/util';
 
 const modalStyles = {
   content: {
@@ -23,10 +24,13 @@ const modalStyles = {
 
 function Modal(props) {
   function submitDuck() {
-    const { closeModal, duckText, user } = props;
+    const {
+      duckFanout,
+      duckText,
+      user,
+    } = props;
 
-    console.log(user, duckText);
-    closeModal();
+    duckFanout(formatDuck(duckText, user));
   }
 
   const {
@@ -94,6 +98,7 @@ Modal.propTypes = {
   openModal: PropTypes.func.isRequired,
   updateDuckText: PropTypes.func.isRequired,
   user: PropTypes.shape({}).isRequired,
+  duckFanout: PropTypes.func.isRequired,
 };
 
 export default Modal;

@@ -1,3 +1,7 @@
+import { addSingleUsersDuck } from './usersDucks';
+import { closeModal } from './modal';
+import saveDuck from '../../helpers/api';
+
 const FETCHING_DUCK = 'FETCHING_DUCK ';
 const REMOVE_FETCHING_DUCK = 'REMOVE_FETCHING_DUCK ';
 const FETCHING_DUCK_FAILURE = 'FETCHING_DUCK_FAILURE ';
@@ -47,6 +51,21 @@ export function addMultipleDucks(ducks) {
   };
 }
 
+export function duckFanout(duck) {
+  return (dispatch, getState) => {
+    const uid = getState().users.authedId;
+
+    saveDuck(duck)
+      .then((duckWithId) => {
+        dispatch(addDuck(duckWithId));
+        dispatch(addSingleUsersDuck(uid, duckWithId, Date.now()));
+        dispatch(closeModal());
+      })
+      .catch((error) => {
+        console.warn('Error in duckFanout', error);
+      });
+  };
+}
 const initialState = {
   isFetching: true,
   error: '',

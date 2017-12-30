@@ -26,12 +26,11 @@ export function fetchingUsersDucksSuccess(uid, duckIds) {
   };
 }
 
-export function addSingleUsersDuck(uid, duckId, lastUpdated) {
+export function addSingleUsersDuck(uid, duckId) {
   return {
     type: ADD_SINGLE_USERS_DUCK, // Keeps redux cache updated
     uid,
     duckId,
-    lastUpdated,
   };
 }
 
